@@ -20,7 +20,7 @@ package org.wildfly.security.auth.realm;
 
 import static org.wildfly.security.auth.realm.ElytronMessages.log;
 import static org.wildfly.security.password.interfaces.ClearPassword.ALGORITHM_CLEAR;
-import static org.wildfly.security.password.interfaces.DigestPassword.ALGORITHM_DIGEST_MD5;
+import static org.wildfly.security.password.interfaces.DigestPassword.ALGORITHM_DIGEST_SHA_256;
 import static org.wildfly.security.provider.util.ProviderUtil.INSTALLED_PROVIDERS;
 
 import java.io.BufferedReader;
@@ -147,7 +147,7 @@ public class LegacyPropertiesSecurityRealm implements SecurityRealm {
                     clear = plainText;
                 } else if (ALGORITHM_CLEAR.equals(algorithmName)) {
                     clear = true;
-                } else if (ALGORITHM_DIGEST_MD5.equals(algorithmName)) {
+                } else if (ALGORITHM_DIGEST_SHA_256.equals(algorithmName)) {
                     clear = false;
                 } else {
                     log.tracef("PropertiesRealm: Unable to obtain credential for identity [%s]: unsupported algorithm [%s]", principal, algorithmName);
@@ -161,7 +161,7 @@ public class LegacyPropertiesSecurityRealm implements SecurityRealm {
                     passwordFactory = getPasswordFactory(ALGORITHM_CLEAR);
                     passwordSpec = new ClearPasswordSpec(accountEntry.getPasswordRepresentation().toCharArray());
                 } else {
-                    passwordFactory = getPasswordFactory(ALGORITHM_DIGEST_MD5);
+                    passwordFactory = getPasswordFactory(ALGORITHM_DIGEST_SHA_256);
                     if (plainText) { // file contains clear passwords - needs to be digested
                         AlgorithmParameterSpec spec = parameterSpec != null ? parameterSpec : new DigestPasswordAlgorithmSpec(accountEntry.getName(), loadedState.getRealmName());
                         passwordSpec = new EncryptablePasswordSpec(accountEntry.getPasswordRepresentation().toCharArray(), spec);
@@ -203,7 +203,7 @@ public class LegacyPropertiesSecurityRealm implements SecurityRealm {
                     passwordFactory = getPasswordFactory(ALGORITHM_CLEAR);
                     passwordSpec = new ClearPasswordSpec(accountEntry.getPasswordRepresentation().toCharArray());
                 } else {
-                    passwordFactory = getPasswordFactory(ALGORITHM_DIGEST_MD5);
+                    passwordFactory = getPasswordFactory(ALGORITHM_DIGEST_SHA_256);
                     try {
                         byte[] hashed = ByteIterator.ofBytes(accountEntry.getPasswordRepresentation().getBytes(StandardCharsets.UTF_8)).asUtf8String().hexDecode().drain();
                         passwordSpec = new DigestPasswordSpec(accountEntry.getName(), loadedState.getRealmName(), hashed);
@@ -247,7 +247,7 @@ public class LegacyPropertiesSecurityRealm implements SecurityRealm {
     public SupportLevel getCredentialAcquireSupport(final Class<? extends Credential> credentialType, final String algorithmName, final AlgorithmParameterSpec parameterSpec) throws RealmUnavailableException {
         Assert.checkNotNullParam("credentialType", credentialType);
         return PasswordCredential.class.isAssignableFrom(credentialType) &&
-                (algorithmName == null || algorithmName.equals(ALGORITHM_CLEAR) && plainText || algorithmName.equals(ALGORITHM_DIGEST_MD5)) &&
+                (algorithmName == null || algorithmName.equals(ALGORITHM_CLEAR) && plainText || algorithmName.equals(ALGORITHM_DIGEST_SHA_256)) &&
                 (parameterSpec == null || parameterSpec instanceof DigestPasswordAlgorithmSpec)
                 ? SupportLevel.SUPPORTED : SupportLevel.UNSUPPORTED;
     }
@@ -444,7 +444,7 @@ public class LegacyPropertiesSecurityRealm implements SecurityRealm {
 
         /**
          * Set format of users property file - if the passwords are stored in plain text.
-         * Otherwise is HEX( MD5( username ":" realm ":" password ) ) expected.
+         * Otherwise is HEX( SHA-256( username ":" realm ":" password ) ) expected.
          *
          * @param plainText if the passwords are stored in plain text.
          * @return this {@link Builder}

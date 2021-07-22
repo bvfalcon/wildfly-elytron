@@ -39,7 +39,7 @@ import org.wildfly.common.iteration.ByteIterator;
 @Deprecated
 public class UsernamePasswordHashUtil {
 
-    private static final String MD5 = "MD5";
+    private static final String SHA256 = "SHA-256";
 
     private static final byte COLON = ':';
 
@@ -47,13 +47,13 @@ public class UsernamePasswordHashUtil {
 
     /**
      * The default constructor for UsernamePasswordHashUtil, when instantiated
-     * using this constructor a local MD5 MessageDigest will be used for the
+     * using this constructor a local SHA-256 MessageDigest will be used for the
      * generated hashes.
      *
-     * @throws NoSuchAlgorithmException - If the MD5 MessageDigest fails to be created.
+     * @throws NoSuchAlgorithmException - If the SHA-256 MessageDigest fails to be created.
      */
     public UsernamePasswordHashUtil() throws NoSuchAlgorithmException {
-        digest = MessageDigest.getInstance(MD5);
+        digest = MessageDigest.getInstance(SHA256);
     }
 
     /**
@@ -68,7 +68,7 @@ public class UsernamePasswordHashUtil {
     }
 
     /**
-     * An interpretation of the stringToByte_8859_1 method previously from DigestMD5Base.
+     * An interpretation of the stringToByte_8859_1 method previously from DigestSHA256Base.
      * <p/>
      * Converts the supplied String to a byte array using 8859_1 encoding, however if any of the
      * characters in the String are outside of the range for 8859_1 and if allowUTF8 is true the

@@ -48,7 +48,7 @@ class DigestCallbackHandlerUtils {
     }
 
     static CallbackHandler createDigestPwdClientCallbackHandler(final String username, final String password, final String realm, final String sentRealm, final String sentUsername) throws Exception {
-        PasswordFactory passwordFactory = PasswordFactory.getInstance(DigestPassword.ALGORITHM_DIGEST_MD5);
+        PasswordFactory passwordFactory = PasswordFactory.getInstance(DigestPassword.ALGORITHM_DIGEST_SHA_256);
         AlgorithmParameterSpec parameterSpec = new DigestPasswordAlgorithmSpec(username, realm);
         EncryptablePasswordSpec encryptableSpec = new EncryptablePasswordSpec(password.toCharArray(), parameterSpec);
         return createClientCallbackHandler(sentUsername, passwordFactory.generatePassword(encryptableSpec), sentRealm);
@@ -62,7 +62,7 @@ class DigestCallbackHandlerUtils {
                                 .useName(username)
                                 .usePassword(password)
                                 .useRealm(sentRealm)
-                                .setSaslMechanismSelector(SaslMechanismSelector.NONE.addMechanism(SaslMechanismInformation.Names.DIGEST_MD5)));
+                                .setSaslMechanismSelector(SaslMechanismSelector.NONE.addMechanism(SaslMechanismInformation.Names.DIGEST_SHA_256)));
 
 
         return ClientUtils.getCallbackHandler(new URI("seems://irrelevant"), context);

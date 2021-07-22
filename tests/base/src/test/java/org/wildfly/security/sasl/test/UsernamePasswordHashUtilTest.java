@@ -37,23 +37,25 @@ public class UsernamePasswordHashUtilTest {
     public void testGeneratingHex() throws Exception {
         UsernamePasswordHashUtil util = new UsernamePasswordHashUtil();
         String hash = util.generateHashedHexURP("admin", "test", "secret".toCharArray());
-        assertEquals("d6f18efa527f1bd22b4a67fc621cfbe7", hash);
+        assertEquals("85249daf67f9e3fc2aa2452709d63ff2e0f2a5828a67f7463ae669db162140b6", hash);
     }
 
     @Test
     public void testGeneratingBytes() throws Exception {
         UsernamePasswordHashUtil util = new UsernamePasswordHashUtil();
         byte[] hash = util.generateHashedURP("admin", "test", "secret".toCharArray());
-        Assert.assertArrayEquals(new byte[] { (byte) 0xd6, (byte) 0xf1, (byte) 0x8e, (byte) 0xfa, (byte) 0x52, (byte) 0x7f,
-                (byte) 0x1b, (byte) 0xd2, (byte) 0x2b, (byte) 0x4a, (byte) 0x67, (byte) 0xfc, (byte) 0x62, (byte) 0x1c,
-                (byte) 0xfb, (byte) 0xe7 }, hash);
+        Assert.assertArrayEquals(new byte[] { (byte) 0x85, (byte) 0x24, (byte) 0x9d, (byte) 0xaf, (byte) 0x67, (byte) 0xf9,
+                (byte) 0xe3, (byte) 0xfc, (byte) 0x2a, (byte) 0xa2, (byte) 0x45, (byte) 0x27, (byte) 0x09, (byte) 0xd6,
+                (byte) 0x3f, (byte) 0xf2, (byte) 0xe0, (byte) 0xf2, (byte) 0xa5, (byte) 0x82, (byte) 0x8a, (byte) 0x67,
+                (byte) 0xf7, (byte) 0x46, (byte) 0x3a, (byte) 0xe6, (byte) 0x69, (byte) 0xdb, (byte) 0x16, (byte) 0x21,
+                (byte) 0x40, (byte) 0xb6 }, hash);
     }
 
     @Test
     public void testGeneratingHexWithUtf() throws Exception {
         UsernamePasswordHashUtil util = new UsernamePasswordHashUtil();
         String hash = util.generateHashedHexURP("管理员", "测试", "秘密".toCharArray());
-        assertEquals("64a5cd94a3953484a1e473d0ca35d208", hash);
+        assertEquals("4d9ab08994e02cdd37b3ee159ba0d6b57afa38b8897dbf5f6e268b112b51f145", hash);
     }
 
     @Test
@@ -67,7 +69,7 @@ public class UsernamePasswordHashUtilTest {
     public void testGeneratingBlank() throws Exception {
         UsernamePasswordHashUtil util = new UsernamePasswordHashUtil();
         String hash = util.generateHashedHexURP("", "", new char[] {});
-        assertEquals("4501c091b0366d76ea3218b6cfdd8097", hash);
+        assertEquals("71546855d6279ef70d20909b292c42c2dcb02cd06bde01485da52d13e304ebf4", hash);
     }
 
 }

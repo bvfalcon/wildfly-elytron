@@ -68,7 +68,7 @@ public class DigestTest {
 
     private static Logger log = Logger.getLogger(DigestTest.class);
 
-    private static final String DIGEST = SaslMechanismInformation.Names.DIGEST_MD5;
+    private static final String DIGEST = SaslMechanismInformation.Names.DIGEST_SHA_256;
 
     private static final String REALM_PROPERTY = "com.sun.security.sasl.digest.realm";
 
@@ -341,7 +341,7 @@ public class DigestTest {
         serverProps.put(PRE_DIGESTED_PROPERTY, "true");
         SaslServer server = new SaslServerBuilder(DigestServerFactory.class, DIGEST)
                 .setUserName("George")
-                .setPassword(DigestPassword.ALGORITHM_DIGEST_MD5, getDigestKeySpec("George", "gpwd", "TestRealm"))
+                .setPassword(DigestPassword.ALGORITHM_DIGEST_SHA_256, getDigestKeySpec("George", "gpwd", "TestRealm"))
                 .setProperties(serverProps)
                 .setProtocol("TestProtocol")
                 .addMechanismRealm("TestRealm")
@@ -373,7 +373,7 @@ public class DigestTest {
         serverProps.put(PRE_DIGESTED_PROPERTY, "true");
         SaslServer server = new SaslServerBuilder(DigestServerFactory.class, DIGEST)
                 .setUserName("George")
-                .setPassword(DigestPassword.ALGORITHM_DIGEST_MD5, getDigestKeySpec("George", "gpwd", "TestServer"))
+                .setPassword(DigestPassword.ALGORITHM_DIGEST_SHA_256, getDigestKeySpec("George", "gpwd", "TestServer"))
                 .setProperties(serverProps)
                 .setProtocol("TestProtocol")
                 .addMechanismRealm("TestServer")
@@ -502,7 +502,7 @@ public class DigestTest {
     public void testSuccessfulExchange_PreHashedClient() throws Exception {
         SaslServer server = new SaslServerBuilder(DigestServerFactory.class, DIGEST)
                 .setUserName("George")
-                .setPassword(DigestPassword.ALGORITHM_DIGEST_MD5, getDigestKeySpec("George", "gpwd", "TestRealm"))
+                .setPassword(DigestPassword.ALGORITHM_DIGEST_SHA_256, getDigestKeySpec("George", "gpwd", "TestRealm"))
                 .setProtocol("TestProtocol")
                 .setServerName("TestServer")
                 .addMechanismRealm("TestRealm")
@@ -531,7 +531,7 @@ public class DigestTest {
     public void testSuccessfulExchange_DefaultRealm_PreHashedClient() throws Exception {
         SaslServer server = new SaslServerBuilder(DigestServerFactory.class, DIGEST)
                 .setUserName("George")
-                .setPassword(DigestPassword.ALGORITHM_DIGEST_MD5, getDigestKeySpec("George", "gpwd", "TestServer"))
+                .setPassword(DigestPassword.ALGORITHM_DIGEST_SHA_256, getDigestKeySpec("George", "gpwd", "TestServer"))
                 .setProtocol("TestProtocol")
                 .setServerName("TestServer")
                 .addMechanismRealm("TestServer")
@@ -562,7 +562,7 @@ public class DigestTest {
         serverProps.put(REALM_PROPERTY, "TestRealm");
         SaslServer server = new SaslServerBuilder(DigestServerFactory.class, DIGEST)
                 .setUserName("George")
-                .setPassword(DigestPassword.ALGORITHM_DIGEST_MD5, getDigestKeySpec("George", "gpwd", "TestRealm"))
+                .setPassword(DigestPassword.ALGORITHM_DIGEST_SHA_256, getDigestKeySpec("George", "gpwd", "TestRealm"))
                 .setProperties(serverProps)
                 .setProtocol("TestProtocol")
                 .setServerName("TestServer")
@@ -595,7 +595,7 @@ public class DigestTest {
         serverProps.put(REALM_PROPERTY, "TestRealm");
         SaslServer server = new SaslServerBuilder(DigestServerFactory.class, DIGEST)
                 .setUserName("George")
-                .setPassword(DigestPassword.ALGORITHM_DIGEST_MD5, getDigestKeySpec("George", "gpwd", "TestRealm"))
+                .setPassword(DigestPassword.ALGORITHM_DIGEST_SHA_256, getDigestKeySpec("George", "gpwd", "TestRealm"))
                 .setProperties(serverProps)
                 .setProtocol("TestProtocol")
                 .setServerName("TestServer")
@@ -625,7 +625,7 @@ public class DigestTest {
         serverProps.put(REALM_PROPERTY, "TestRealm");
         SaslServer server = new SaslServerBuilder(DigestServerFactory.class, DIGEST)
                 .setUserName("George")
-                .setPassword(DigestPassword.ALGORITHM_DIGEST_MD5, getDigestKeySpec("George", "gpwd", "TestRealm"))
+                .setPassword(DigestPassword.ALGORITHM_DIGEST_SHA_256, getDigestKeySpec("George", "gpwd", "TestRealm"))
                 .setProperties(serverProps)
                 .setProtocol("TestProtocol")
                 .setServerName("TestServer")
@@ -802,7 +802,7 @@ public class DigestTest {
         Map<String, Object> serverProps = new HashMap<String, Object>();
         SaslServer server = new SaslServerBuilder(DigestServerFactory.class, DIGEST)
                 .setUserName("George")
-                .setPassword(DigestPassword.ALGORITHM_DIGEST_MD5, getDigestKeySpec("George", "gpwd", "TestRealm"))
+                .setPassword(DigestPassword.ALGORITHM_DIGEST_SHA_256, getDigestKeySpec("George", "gpwd", "TestRealm"))
                 .setProperties(serverProps)
                 .setProtocol("TestProtocol")
                 .addMechanismRealm("TestRealm")
