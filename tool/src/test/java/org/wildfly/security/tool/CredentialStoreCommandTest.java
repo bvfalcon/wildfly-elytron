@@ -25,10 +25,10 @@ import static org.junit.Assert.assertTrue;
 import java.security.KeyPair;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.cli.AlreadySelectedException;
-import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -542,16 +542,17 @@ public class CredentialStoreCommandTest extends AbstractCommandTest {
 
         String clearTextPassword = "secret_password";
 
-        Pair<String, String> addOperation = Pair.of("--add", "-a");
-        Pair<String, String> existsOperation = Pair.of("--exists", "-e");
-        Pair<String, String> removeOperation = Pair.of("--remove", "-r");
-        Pair<String, String> aliasesOperation = Pair.of("--aliases", "-v");
+        Map<String, String> operations = new HashMap<>();
+        operations.put("--add", "-a");
+        operations.put("--exists", "-e");
+        operations.put("--remove", "-r");
+        operations.put("--aliases", "-v");
 
         String storeFileName = getStoragePathForNewFile();
-        String[] firstOperation = { addOperation.getLeft(), addOperation.getRight(), existsOperation.getLeft(),
-                aliasesOperation.getLeft(), aliasesOperation.getRight() };
-        String[] secondOperation = { removeOperation.getRight(), removeOperation.getLeft(), addOperation.getLeft(),
-                removeOperation.getLeft(), addOperation.getRight() };
+        String[] firstOperation = { "--add", operations.get("--add"), "--exists",
+                "--aliases", operations.get("--aliases") };
+        String[] secondOperation = { operations.get("--remove"), "--remove", "--add",
+                "--remove", operations.get("--add") };
 
         for (int i = 0; i < firstOperation.length; i++) {
             String[] args = { "--location=" + storeFileName, "--create", firstOperation[i],
